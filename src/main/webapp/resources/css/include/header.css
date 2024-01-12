@@ -1,0 +1,131 @@
+@charset "UTF-8";
+
+2024년
+ 
+1월
+ 
+8일
+ 
+월요일
+[김가남] [오전 9:15] gd-edu.gitbook.io /crud
+kgn @goodee.co.kr
+[김가남] [오전 11:05] https: //gd-edu.gitbook.io /crud /v /undefined-5 /
+[김가남] [오후 7:48] https: //gd-edu.gitbook.io /crud /v /web
+[김가남] [오후 7:49] 현재 일부 교안에 접속이 안되는 이슈가 있어서 주소를 다시 셋팅했습니다 . 위 주소로 접속해보시길 바랍니다
+	.
+2024년 1월 10일 수요일
+[김가남] [오후 12:32] <filter> <filter-name>encodingFilter </filter-name> <filter-class>org.springframework.web.filter.CharacterEncodingFilter
+	</filter-class> <init-param> <param-name>encoding </param-name> <param-value>UTF-8
+	</param-value> </init-param> <init-param> <param-name>forceEncoding </param-name>
+	<param-value>true </param-value> </init-param> </filter> <filter-mapping>
+	<filter-name>encodingFilter </filter-name> <url-pattern> /* </url-pattern>
+	</filter-mapping>2024년 1월 11일 목요일
+[김가남] [오전 10:47] <beans xmlns ="http: //www.springframework.org /schema
+	/beans "
+   xmlns:xsi ="http: //www.w3.org /2001 /XMLSchema-instance "
+   xmlns:jdbc ="http: //www.springframework.org /schema /jdbc "
+   xmlns:context ="http: //www.springframework.org /schema /context "
+   xmlns:mybatis-spring ="http: //mybatis.org /schema /mybatis-spring "
+   xmlns:tx ="http: //www.springframework.org /schema /tx "
+   xsi:schemaLocation ="http: //www.springframework.org /schema /jdbc http:
+	//www.springframework.org /schema /jdbc /spring-jdbc-4.3.xsd
+      htt ...
+[김가남] [오전 10:49] org.springframework.jdbc.datasource.DriverManagerDataSource
+[김가남] [오전 11:18] org.springframework.jdbc.datasource.DataSourceTransactionManager
+[김가남] [오전 11:45] <%@ taglib prefix ="c " 
+uri ="http: //java.sun.com /jsp /jstl /core " %> [김가남] [오전 11:49] package com.goodee.guestbook.model.dao
+	;
+
+import java.sql.ResultSet ;
+import java.sql.SQLException ;
+import java.util.ArrayList ;
+import java.util.List ;
+
+import org.springframework.beans.factory.annotation.Autowired ;
+import org.springframework.jdbc.core.JdbcTemplate ;
+import org.springframework.jdbc.core.RowMapper ;
+import org.springframework.stereotype.Repository ;
+
+import com.goodee.guestbook.model.vo.GuestBookVo ;
+
+ @Repository
+public class GuestBookDao { @Autowired JdbcTemplate jdbcTemplate; ...
+	2024년 1월 12일 금요일 이현주님이 나갔습니다. [김가남] [오후 12:14 ] mybatis-config.xmllog4j.xmllecturetargetpom.properties.classpathMANIFEST.MF
+	### Eclipse ###
+.metadatabin/ tmp/ *.tmp *.bak *.swp *~.niblocal.properties.settings/
+	.loadpath.recommenders # Externaltoolbuilders.externalToolBuilders/ # Locallystored"Eclipse launch configurations"
+	*.launch # PyDevspecific (PythonIDEforEclipse) *.pydevproject # CDT-specific
+	(C/ C ++ DevelopmentTooling).cproject # CDT-autotools.autotools # Javaannotationprocessor
+	(APT).factorypath # PDT... [김가남 ] [오후12 :36 ] section {
+   margin : 30px0;
+	
+}
+
+#section_wrap .word {
+	width: 1024px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+[김가남] [오후 12:36] * {
+	margin: 0;
+	padding: 0;
+	color: #2e2e2e;
+}
+
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: #2e2e2e;
+}
+
+input[type='text'], input[type='password'], input[type='email'], input[type='number']
+	{
+	border: 1px solid #adadad;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+input[type='button'], input[type='reset'] {
+	padding: 10px;
+	border: 1px solid #adadad;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+select {
+	border: 1px solid #adadad;
+	border-radius: 5px; paddi ... header { width : 100%;
+	background-color: #f0f0f0;
+	border-bottom: 1px solid #d9d9d9;
+}
+
+#header_wrap {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+#header_wrap .menu {
+	height: 30px;
+	line-height: 30px;
+	border-bottom: 1px solid #d9d9d9;
+}
+
+#header_wrap .menu ul {
+	overflow: hidden;
+}
+
+#header_wrap .menu ul li {
+	float: right;
+	margin-right: 5px;
+	margin-left: 25px;
+}
+
+#header_wrap .title {
+	height: 80px;
+	line-height: 80px;
+	text-align: center;
+}
