@@ -50,6 +50,8 @@ public class MemberDao {
 		args.add(vo.getM_phone());
 		int result = -1;
 		result = jdbcTemplate.update(sql, args.toArray());
+		//result = 부분을 적어주지 않으면 결과가 항상 -1이기 때문에 실패가 뜨게 됨.(서비스의 memberService.createMember(vo) <=0가 항상 트루가 나오기 때문)
+		//update 작업이 성공하면 update의 성공행의 개수가 뜸 => 성공시 0보다 큼
 		
 		return result;
 	}
