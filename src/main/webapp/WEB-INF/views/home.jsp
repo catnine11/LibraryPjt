@@ -11,6 +11,7 @@
 <body>
 	<jsp:include page="include/header.jsp"/>	<!-- 공통화 : header.jsp 의 내용이 이 안에 들어오게 됨--> 
 	<jsp:include page="include/nav.jsp"/>
+	<!-- jsp:include는 java에서 하는거라 안에 jstl을 따로 넣어줘야 하고 <//%@ include file=""%>는 html이 하는거라 jstl 따로 안 넣어줘도 됨 -->
 	
 	<section>
 		<div id="section_wrap">
