@@ -33,12 +33,8 @@
                         <td>${item.m_id}</td>
                         <td>${item.m_name}</td>
                         <td>
-                        	<c:choose>
-                        	<c:when test="${item.m_gender == 'M'}">
-                        		남자
-                        	</c:when> 
-                        	<c:otherwise>여자</c:otherwise>
-                        	</c:choose>
+                        	<c:if test="${item.m_gender == 'M'}">남자</c:if>
+							<c:if test="${item.m_gender == 'W'}">여자</c:if>
                         </td>
                         <td>${item.m_mail}</td>
                         <td>${item.m_phone}</td>

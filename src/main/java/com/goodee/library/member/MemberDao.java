@@ -101,6 +101,10 @@ public class MemberDao {
 	// 회원목록 조회
 	public List<MemberVo> selectMemberList(){
 		logger.info("[MemberDao] selectMemberList();");
+		
+		//jdbcTemplate은 쿼리를 스트링으로 적고 where에 뭐가 들어갈지, ..과 결과를 따로 parsing 해줘야함 
+		// => 불편함 => myBatis 쓸거임(프레임워크)
+		
 		String sql = "SELECT * FROM tbl_member";
 		List<MemberVo> memberVos = new ArrayList<MemberVo>();
 			memberVos = jdbcTemplate.query(sql, new RowMapper<MemberVo>() {
