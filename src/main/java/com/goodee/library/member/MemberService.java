@@ -37,4 +37,14 @@ public class MemberService {
 		return dao.selectMemberList();
 	}
 	
+	public int modifyMember(MemberVo vo) {
+		logger.info("[MemberService] modifyMember();");
+		return dao.updateMember(vo);
+	}
+	
+	public MemberVo getLoginedMemberVo(MemberVo vo) {
+		logger.info("[MemberService] getLoginedMemberVo();");
+		return dao.getmodifyMember(vo);
+	}
+	
 }

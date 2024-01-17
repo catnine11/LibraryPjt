@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goodee.library.member.MemberDao">
+	<select id="isMemberCheck" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM tbl_member
+		<where>
+			 m_id = #{m_id}
+			 <!-- where 안에 넣어준다 -->
+		</where>
+	</select>
+	
+	<!-- #바인딩과 $바인딩의 차이 : #은 ""안에 넣을 수 있는 값만 받기 때문에 SQL Injection을 막을 수 있음 -->
+	<insert id="insertMember" parameterType="com.goodee.library.member.MemberVo">
+		INSERT INTO tbl_member(m_id, m_pw, m_name, m_gender, m_mail, m_phone, m_reg_date, m_mod_date) 
+				VALUES(#{m_id},#{m_pw},#{m_name},#{m_gender},#{m_mail},#{m_phone}, NOW(), NOW())
+	</insert>
+	
+	<select id="selectMember" parameterType="String" resultType="com.goodee.library.member.MemberVo">
+		SELECT * FROM tbl_member
+		<where>
+			m_id = #{m_id}
+		</where>
+	</select>
+	
+	<select id="selectMemberList" resultType="com.goodee.library.member.MemberVo">
+	<!-- 매개변수가 없기 때문에 파라미터 타입 적어줄 필요 없음 // list<vo>는 select가 해주기 때문에 리절트타입 vo로만 적어주면 됨
+	하나의 리절트셋이 가지고 있는걸 어떤 형태로 적을지만 정해주면 됨(여러개 있을때는 셀렉트리스트가 알아서 해주기때문에) -->
+		SELECT * FROM tbl_member
+	</select>
+	
+	<!-- insert와 update의 결과는 int로 지정되어있기때문에(그렇게 할거라서) resultType을 따로 적어주지 않는다 -->
+	<update id="updateMember" parameterType="com.goodee.library.member.MemberVo">
+		UPDATE tbl_member
+			SET m_name = #{m_name}, m_gender = #{m_gender}, m_mail = #{m_mail}, 
+				m_phone = #{m_phone}, m_mod_date = NOW()
+			<!-- update, delete 할때는 where 을 무조건 적어줘야 함(안 적어주면 모든 사용자 정보가 다 변경됨) -->
+			<where>
+				m_no = #{m_no}
+			</where> 
+	</update>
+	
+	
+</mapper>

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -68,7 +69,7 @@ public class MemberController {
 		return nextPage;
 	}
 	
-	// 로그아웃 기능
+	// 로그아웃 기능  - 세션 무효화
 	@RequestMapping(value = "/logout", method = RequestMethod.GET) //a태그로 보낸것은 get으로 받는다
 	public String logoutMember(HttpSession session) {
 		logger.info("[MemberController] logoutMember();");
@@ -106,7 +107,7 @@ public class MemberController {
 //		return mav;
 //	}
 	
-	// 회원목록 이동 - Model(1)
+//	 회원목록 이동 - Model(1)
 	@RequestMapping(method = RequestMethod.GET)
 	public String listupMember(Model model) {
 		//String 화면이동정보, Model 정보만, ModelAndView 화면과 정보 둘 다 (viewResolver에게) 전달해줄때
@@ -117,5 +118,60 @@ public class MemberController {
 		model.addAttribute("memberVos", memberVos);
 		return "member/listup";
 	}
+	
+	// 회원정보 수정 화면 이동
+//	@RequestMapping(value = "/{m_id}", method = RequestMethod.GET)  //url의 / 뒤에 오는것을 {}안에 있는 것인 m_id 라고 부르겠다고 선언
+//	public String modifyMember(@PathVariable String m_id) { //@PathVariable : url의 {}안에 있는 것을
+		//  nav에서 정해준 /member/${loginMember.m_no}  안에 있는 값을 get으로 가져 온 것을 위에 지정해준 /{}로 부르는거임(자기 혼자서)
+		//헷갈리지 않기 위해서는 no 로 통일해주는 것이 좋긴 함~
+//		System.out.println(m_id);
+	@RequestMapping(value = "/{m_no}", method = RequestMethod.GET)
+	public String modifyMember(@PathVariable int m_no, HttpSession session) { 
+		logger.info("[MemberController] modifyMember();");
+		// 다른 사람의 정보 수정o?
+		// 1. url 에 있는 m_no 기준 select
+		// 2. 수정 화면 이동
+		// 세션 정보를 받아쓰면 안 되고 컨트롤러를 모델이나 모델앤뷰로 보내서 뿌려줘야 함
+		
+		// 내 정보만 수정o?
+		// 1. 세션에 있는 m_no 기준
+		// 2. 수정 화면
+		MemberVo loginedMemberVo = (MemberVo)session.getAttribute("loginMember");
+		String nextPage = "";
+		if(loginedMemberVo == null) {
+			// 로그인 화면 이동
+			nextPage = "redirect:/member/login"; //로그인 후 시간이 지나서 만료되거나, 타인이 url을 바로 쳐서 이동하는걸 방지해줌
+		}else {
+			// 수정 화면 이동
+			nextPage = "member/modify_form";
+		}
+		
+		return nextPage;
+	}
+	
+	// 회원정보 수정 기능
+	@RequestMapping(value = "/{m_no}", method = RequestMethod.POST)
+	public String modifyMemberConfirm(MemberVo vo,
+									HttpSession session) {
+		logger.info("[MemberController] modifyMemberConfirm();");
+		//1. 회원 정보 수정(DB)
+		int result = memberService.modifyMember(vo);
+		
+		if(result > 0) { //result >=1 같은 말임, 성공했을 때
+			//2. 세션 정보 변경
+			MemberVo loginedMemberVo = new MemberVo();
+			loginedMemberVo = MemberService.getLoginedMemberVo(vo.getM_no());
+			session.setAttribute("loginMember", loginedMemberVo);
+			session.setMaxInactiveInterval(60*30);
+			//3. 성공 결과 화면 이동
+			
+		}else {
+			//3. 실패 화면 이동
+			
+		}
+		
+		return "";
+	}
+	
 	
 }

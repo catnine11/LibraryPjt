@@ -26,7 +26,13 @@
 			<div class="menu">
 				<ul>
 					<li><a href="<c:url value='/member/logout'/>">로그아웃</a></li>
-					<li><a href="<c:url value=''/>">계정수정</a></li>
+					<li>
+						<a href="<c:url value='/member/${loginMember.m_no}'/>">계정수정</a>
+<%-- 						<a href="<c:url value=''/>"> --%>
+<%-- 							<c:out value="${empty loginMember ? 비어있음 : loginMember.m_no}"/> --%>
+							<!-- JasperException : JSTL 문제임 -->
+<!-- 						계정수정</a> -->
+					</li>
 					<li><a href="<c:url value='/member'/>">회원목록</a></li>
 				</ul>
 			</div>
