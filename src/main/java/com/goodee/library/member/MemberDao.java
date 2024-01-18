@@ -191,11 +191,23 @@ public class MemberDao {
 		return result;
 	}
 	
-	public MemberVo getmodifyMember(MemberVo vo) {
-		logger.info("[MemberDao] getmodifyMember();");
+	// 회원 단일 정보 조회
+//	public MemberVo getmodifyMember(int m_no) {
+//		logger.info("[MemberDao] getmodifyMember();");
+//		MemberVo resultVo = new MemberVo();
+//		resultVo = sqlSession.selectOne(namespace+"getmodifyMember", m_no);
+	public MemberVo selectMemberOne(int m_no) { //int m_no 기준으로 받아온 값을 vo 객체에 담아서 넘겨줌
+		logger.info("[MemberDao] selectMemberOne();");
 		MemberVo resultVo = new MemberVo();
-		resultVo = sqlSession.selectOne(namespace+"getmodifyMember", vo);
+		resultVo = sqlSession.selectOne(namespace+"selectMemberOne", m_no);
 		return resultVo;
+	}
+	
+	public MemberVo selectMemberOne(MemberVo vo) {  //id, mail, 이름을 기준으로 정보(회원 한명)를 조회하고 싶지만
+//								필요한 정보가 여럿이라 vo를 파라미터 로 써줌 => 위에와 메소드는 같지만 매개변수만 다를때 : 오버로드
+		logger.info("[MemberDao] selectMemberOne();");
+		MemberVo memberVo = sqlSession.selectOne(namespace+"selectMemberForPassword", vo);
+		return memberVo;
 	}
 	
 	

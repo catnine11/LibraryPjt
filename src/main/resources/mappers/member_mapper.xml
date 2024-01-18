@@ -39,5 +39,22 @@
 			</where> 
 	</update>
 	
+<!-- 	<select id="getmodifyMember" resultType="int"> -->
+	<select id="selectMemberOne" parameterType="int" resultType="com.goodee.library.member.MemberVo">
+	<!-- 어떤 정보를 받을지가 parameterType 어던 정보를 줄지가 resultType -->
+		SELECT * FROM tbl_member
+			<where>
+				m_no = #{m_no}
+			</where>
+	</select>
+	
+	<select id="selectMemberForPassword" parameterType="com.goodee.library.member.MemberVo" 
+				resultType="com.goodee.library.member.MemberVo">
+		SELECT * FROM tbl_member
+		<where>
+			m_id = #{m_id} AND m_name = #{m_name} AND m_mail = #{m_mail}
+		</where>
+	</select>
+	
 	
 </mapper>
