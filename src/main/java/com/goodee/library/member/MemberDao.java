@@ -3,7 +3,9 @@ package com.goodee.library.member;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -98,6 +100,7 @@ public class MemberDao {
 			//=> 막아주자!! => if(resultVo != null) { 안에 넣어주기~
 		if(resultVo != null) {
 			if(passwordEncoder.matches(vo.getM_pw(), resultVo.getM_pw())== false) {
+							//암호화 전 사용자가 입력한 값   암호화 수 db에 저장된 값
 				resultVo = null;
 			}
 		}
@@ -208,6 +211,21 @@ public class MemberDao {
 		logger.info("[MemberDao] selectMemberOne();");
 		MemberVo memberVo = sqlSession.selectOne(namespace+"selectMemberForPassword", vo);
 		return memberVo;
+	}
+	
+	public int updatePassword(String m_id, String newPassword) { //service의 뉴패스워드는 실제만들어진것, 이 newpassword는 그냥 그렇게 부르는거
+		logger.info("[MemberDao] updatePassword();");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("m_id", m_id);
+//		map.put("m_pw", newPassword); //비밀번호에 새 비번 저장
+		map.put("m_pw", passwordEncoder.encode(newPassword)); //암호화된 상태로 저장(단방향 암호화로 )
+		int result = -1; // db에 접근 못한것, 접근했는데 update 못한것, 업데이트 됨 구분하기 위해 -1로 해줌
+		try { //database에 접근 못할 수도 있기 때문에 트라이캐치..
+			result = sqlSession.update(namespace+"updatePassword", map);
+		} catch (Exception e) {
+			logger.error(e.toString()); //error 로그를 스트링 형태로 만들고 로거로서 출력되도록
+		}
+		return result;
 	}
 	
 	

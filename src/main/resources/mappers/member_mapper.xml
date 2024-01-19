@@ -56,5 +56,16 @@
 		</where>
 	</select>
 	
+	<update id="updatePassword" parameterType="hashMap">
+	 <!-- update와 insert는 항상 int로 나오기때문에 result타입 따로 적지x
+	 	parameterType에는 클래스의 이름을 적어주는게 좋기때문에 map(인터페이스) 보다는 hashmap으로 적어주는게 정석임 -->
+		UPDATE tbl_member
+			SET m_pw = #{m_pw} , m_mod_date = NOW()
+		<where>
+			m_id = #{m_id}
+		</where>
+	
+	</update>
+	
 	
 </mapper>

@@ -136,17 +136,18 @@ public class MemberController {
 		// 내 정보만 수정o?
 		// 1. 세션에 있는 m_no 기준
 		// 2. 수정 화면
-		MemberVo loginedMemberVo = (MemberVo)session.getAttribute("loginMember");
-		String nextPage = "";
-		if(loginedMemberVo == null) {
-			// 로그인 화면 이동
-			nextPage = "redirect:/member/login"; //로그인 후 시간이 지나서 만료되거나, 타인이 url을 바로 쳐서 이동하는걸 방지해줌
-		}else {
-			// 수정 화면 이동
-			nextPage = "member/modify_form";
-		}
-		
-		return nextPage;
+//		MemberVo loginedMemberVo = (MemberVo)session.getAttribute("loginMember");
+//		String nextPage = "";
+//		if(loginedMemberVo == null) {
+//			// 로그인 화면 이동
+//			nextPage = "redirect:/member/login"; //로그인 후 시간이 지나서 만료되거나, 타인이 url을 바로 쳐서 이동하는걸 방지해줌
+//		}else {
+//			// 수정 화면 이동
+//			nextPage = "member/modify_form";
+//		}
+//		return nextPage;
+		//인터셉터하면 필요없어짐
+		return "member/modify_form";
 	}
 	
 	// 회원정보 수정 기능

@@ -23,6 +23,17 @@
 	
 	<context:component-scan base-package="com.goodee.library" />
 	
+	<interceptors>
+	   <interceptor>
+	      <mapping path="/member/**"/>
+	      <!-- login이랑 회원가입, 비번 찾기를 제외하고는 member/로 시작하는 url은 세션이 있어야 함 -->
+	      <exclude-mapping path="/member/login"/>
+	      <exclude-mapping path="/member/create"/>
+	      <exclude-mapping path="/member/findPassword"/>
+	      <beans:bean class="com.goodee.library.member.MemberLoginInterceptor"/>
+	   </interceptor>
+	</interceptors>
+	
 	
 	
 </beans:beans>
