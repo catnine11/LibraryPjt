@@ -33,7 +33,12 @@
 							<!-- JasperException : JSTL 문제임 -->
 <!-- 						계정수정</a> -->
 					</li>
-					<li><a href="<c:url value='/member'/>">회원목록</a></li>
+					<li>
+						<a href="<c:url value='/member'/>">회원목록</a>
+					</li>
+					<li>
+						<a href="<c:url value='/book/create'/>">도서등록</a>
+					</li>
 				</ul>
 			</div>
 			<div class="search">
