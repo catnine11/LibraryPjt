@@ -1,9 +1,13 @@
 package com.goodee.library.book;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,6 +74,38 @@ public class BookController {
 		return nextPage;
 	}
 	
+	// 도서 목록 조회 기능(검색)
+	@RequestMapping(method = RequestMethod.GET) //레스트api: 목록조회는 기본 url로 함.. 이럴때는 value 안 적어도 됨
+//	public String selectBookList(Model model, @RequestParam(required = false) String b_name) {
+	public String selectBookList(Model model, BookVo vo) {
+	//목록을 보여줄때 스트링으로 어떤거 보낼지 하고 model.addAttribute로 어떤 정보 전달할지
+	// requestParam : 어떤 이름으로 부를지, required=false : 필수 입력값은 아님(true가 기본값)
+		logger.info("[BookController] selectBookList();");
+		//1. 목록 정보 조회(DB)
+//		List<BookVo> bookVos = bookService.selectBookList(b_name);
+		
+		vo.setTotalCount(bookService.selectBookCount(vo.getB_name()));
+//		List<BookVo> bookVos = bookService.selectBookList(vo.getB_name());
+		List<BookVo> bookVos = bookService.selectBookList(vo);
+		//2. 화면 전환 + 정보 전달
+		model.addAttribute("bookVos", bookVos); //앞 : 어떤 이름으로 전달할지, 뒤: 어떤거 전달할지
+		model.addAttribute("pagingVo", vo);
+		
+		return "book/listup";
+	}
 	
+	// 도서 상세화면 이동
+	// 메소드 명 -> bookDetail
+	// 정수형 b_no를 url을 통해서 받아오기  => 스프링 문법으로 /{}
+	@RequestMapping(value = "/{b_no}", method = RequestMethod.GET)
+	public String bookDetail(@PathVariable int b_no, Model model) {
+		logger.info("[BookController] bookDetail();");
+		//1. 도서 한 권의 정보 조회
+		BookVo vo = bookService.bookDetail(b_no);
+		//2. 화면 전환 + 정보 전달
+		model.addAttribute("bookVo", vo);
+		
+		return "book/detail";
+	}
 	
 }

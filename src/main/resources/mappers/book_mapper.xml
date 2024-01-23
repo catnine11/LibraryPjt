@@ -7,5 +7,45 @@
 		INSERT INTO tbl_book(b_name, b_author, b_publisher, b_publish_year, b_thumbnail, b_reg_date)
 				VALUES(#{b_name}, #{b_author}, #{b_publisher}, #{b_publish_year}, #{b_thumbnail}, NOW())
 	</insert>
+	
+<!-- 	<select id="selectBookList" parameterType="String" resultType="com.goodee.library.book.BookVo"> -->
+	<select id="selectBookList" parameterType="com.goodee.library.book.BookVo"
+	 resultType="com.goodee.library.book.BookVo">
+		SELECT * FROM tbl_book
+		<!-- 검색어가 있다면 where 절이 있어야 함(파라미터?) 검색어가 있을때를 정해서 해야함 -->
+<!-- 		<if test="b_name != null and ''.equals(b_name) == false"> --> 
+<!-- 괄호 안에 작은 따옴표를 적지 않으면 오류 가능성.. -->
+		<if test="b_name != null and b_name.equals('') == false">
+			<where>
+<!-- 				b_name = #{b_name} -->
+<!-- 				b_name LIKE %카페% -->
+	<!-- 카페 앞 뒤로 뭐가 나오든 상관없음 (마리아db에서..), 근데 %카페%가 b_name 중에 있어야 하기 때문에 concat-붙여주기-안에 넣어서 쓰기 -->
+				b_name LIKE CONCAT('%', #{b_name}, '%') <!-- 마리아db -->
+<!-- 				b_name LIKE '%'||#{b_name}||'&'   -->
+				<!-- oracle -->
+			</where>
+		</if>
+		ORDER BY b_no DESC <!-- b_no를 내림차순으로 정렬 -->
+		LIMIT #{limit_pageNo}, #{pageSize} <!-- b_name을 vo로 바꾸면서 추가 -->
+		<!-- limit 10,10으로 쓰면 11번째행부터 10개 말하는것 -->
+	</select>
+	
+	<select id="selectBookCount" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM tbl_book
+		<if test="b_name != null and b_name.equals('') == false">
+			<where>
+				b_name LIKE CONCAT('%', #{b_name}, '%')
+			</where>
+		</if>
+	</select>
+	
+	<select id="selectBookOne" parameterType="int" resultType="com.goodee.library.book.BookVo">
+		<!-- 셀렉트문은 리절트타입 항상 있어야 함 -->
+		SELECT * FROM tbl_book
+		<where>
+			b_no = #{b_no}
+		</where>
+	</select>
+	
 
 </mapper>
