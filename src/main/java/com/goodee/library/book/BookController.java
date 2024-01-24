@@ -98,7 +98,7 @@ public class BookController {
 	// 메소드 명 -> bookDetail
 	// 정수형 b_no를 url을 통해서 받아오기  => 스프링 문법으로 /{}
 	@RequestMapping(value = "/{b_no}", method = RequestMethod.GET)
-	public String bookDetail(@PathVariable int b_no, Model model) {
+	public String bookDetail(@PathVariable int b_no, Model model) { //url 안의 정보를 어떤 타입, 어떤 이름으로 쓸건지(부를건지)
 		logger.info("[BookController] bookDetail();");
 		//1. 도서 한 권의 정보 조회
 		BookVo vo = bookService.bookDetail(b_no);
@@ -106,6 +106,64 @@ public class BookController {
 		model.addAttribute("bookVo", vo);
 		
 		return "book/detail";
+	}
+	
+	// 도서 수정 화면 이동
+	@RequestMapping(value = "/modify/{b_no}", method = RequestMethod.GET)
+	public String modifyBookForm(@PathVariable int b_no, Model model) { //변경 전 정보와 변경 후 정보를 보여주기 때문에 정보 전달 같이 해야함
+		logger.info("[BookController] modifyBookForm();");
+		//1. 기존 정보 조회
+		BookVo vo = bookService.bookDetail(b_no); // 도서상세화면 이동창을 이미 만들었기 때문에 그대로 쓰면 됨?
+				// 화면이 아니라 수정 전의 정보를 갖고오고 싶은거임. 컨트롤러가 하고싶은 일이 다르니까 서비스를 따로 만들고 dao 똑같이 하는게 정석적
+				// 상세화면과 수정에서 보는 정보가 다른(가져오는 정보가 다를때)는 셀렉트컬럼에서 쿼리를 나눌때는 서비스를 나눠주는 것이 좋음
+		//2. 화면 전환 + 정보 전달
+		model.addAttribute("bookVo", vo);
+		
+		return "book/modify";
+	}
+	
+	// 도서 수정 기능
+	@RequestMapping(value = "/modify/{b_no}" ,method = RequestMethod.POST)
+//	public String modifyBookConfirm(BookVo vo, @RequestParam("file") MultipartFile file, @PathVariable int b_no) { //내가
+	public String modifyBookConfirm(BookVo vo, @RequestParam("file") MultipartFile file) {
+		//file을 받을때는 requestparam써야하고 인코딩타입 적어야함(사용자가 파일 수정할수도 있음
+		logger.info("[BookController] modifyBookConfirm();");
+		// 1. 만약에 새로운 파일O -> 파일 업로드
+		if(file.getOriginalFilename().equals("") == false) { //파일이 있으면 파일이름 있음, getOriginalFilename : 스트링쓰는게 가장 부하 적음
+			String savedFileName = uploadFileService.upload(file);
+			if(savedFileName != null) {
+				vo.setB_thumbnail(savedFileName);
+			}
+		}
+		// 2. 도서 정보 수정
+		int result = bookService.modifyConfirm(vo);
+		// (1) BookService에 modifyConfirm 메소드 생성
+		// (2) BookDao 에 updatBook 메소드 생성
+		// (3) BookService의modifyConfirm이 BookDao의 updateBook으로부터 int(update 수행결과)를 전달
+		// (4) book_mapper에 updateBook 쿼리 생성
+		// -> 파라미터가 BookVo
+		// -> tbl_book을 UPDATE
+		// -> b_name, b_author, b_publisher, b_publish_year, b_mod_date
+		// -> 만약에 b_thumbnail이 null이 아니면서 빈 스트링이 아니라면 b_thumbnail도 수정
+		
+		///// 디버그할때 mod_date는 null : modify에서 안보냈기때문에
+		
+		// 3. 결과 화면 이동
+		if(result>0) {
+			return "book/modify_success";
+		}else {
+			return "book/modify_fail";
+		}
+		
+		//(내가)
+//		if(result >0) {
+////			return "book/detail"; //url이 아니라 detail.jsp로
+//			return "redirect:/book/detail/" +b_no; //redirect 남발하는게 좋지 않기때문에 정보를 새로고침 하고싶으면 ajax쓰던가 해야함
+//		}else {
+//			return "book/modify";
+//		}
+		
+		
 	}
 	
 }

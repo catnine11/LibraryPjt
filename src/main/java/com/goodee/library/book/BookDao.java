@@ -38,7 +38,7 @@ public class BookDao {
 	public int selectBookCount(String b_name) {
 		logger.info("[BookDao] selectBookCount();");
 		int totalCount = sqlSession.selectOne(namespace+"selectBookCount", b_name);
-		//selectone이라 개수가 하나 나와야 함(페이지 개수 : 매퍼에 카운트 써주기)
+		//selectOne이라 개수가 하나 나와야 함(페이지 개수 : 매퍼에 카운트 써주기)
 		return totalCount;
 	}
 	
@@ -48,6 +48,13 @@ public class BookDao {
 		BookVo vo = sqlSession.selectOne(namespace+"selectBookOne", b_no);
 		
 		return vo;
+	}
+	
+	public int updatBook(BookVo vo) {
+		logger.info("[BookDao] updatBook();");
+		int result = sqlSession.update(namespace+"updatBook", vo);
+		
+		return result;
 	}
 
 }

@@ -47,5 +47,13 @@ public class BookService {
 		return vo;
 	}
 	
+	public int modifyConfirm(BookVo vo) {
+		logger.info("[BookService] modifyConfirm();");
+		int result = -1;
+		result = dao.updatBook(vo);
+		
+		return result;
+	}
+	
 
 }
