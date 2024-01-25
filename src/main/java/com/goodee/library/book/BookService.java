@@ -55,5 +55,10 @@ public class BookService {
 		return result;
 	}
 	
+	public int deleteBook(int b_no) {
+		logger.info("[BookService] deleteBook();");
+		return dao.deleteBook(b_no);
+	}
+	
 
 }

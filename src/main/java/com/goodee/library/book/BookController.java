@@ -5,9 +5,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -163,7 +165,18 @@ public class BookController {
 //			return "book/modify";
 //		}
 		
-		
+	}
+	
+	// 도서 삭제 기능
+	@RequestMapping(value = "/{b_no}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteBookConfirm(@PathVariable int b_no){
+		logger.info("[BookController] deleteBookConfirm();");
+		// 실패 상황 가정(default)
+		String result = "200";
+		if(bookService.deleteBook(b_no) >0) {
+			result = "400";
+		}
+		return ResponseEntity.ok(result); //ResponseEntity 상태를 보여주기 위한 것, @RequestBody 해도 됨
 	}
 	
 }

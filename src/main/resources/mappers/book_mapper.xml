@@ -59,5 +59,13 @@
 				</where>
 	</update>
 	
+	<delete id="deleteBook" >
+		DELETE FROM tbl_book
+		<where>
+			b_no = #{b_no}
+		</where>
+	</delete>
+	
+	
 
 </mapper>
