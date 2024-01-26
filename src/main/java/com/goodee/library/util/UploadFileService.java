@@ -24,7 +24,8 @@ public class UploadFileService {
 		String fileExtension = fileOriName.substring(
 				fileOriName.lastIndexOf("."), fileOriName.length()); 
 				// 파일 원래이름의 제일 끝에서 .뒤에 파일명의 길이만큼(확장자) 잘라서 갖고옴   //.뒤에 확장자를 붙이기 위해서
-		String uploadDir = "C:\\library\\upload\\";
+//		String uploadDir = "C:\\library\\upload\\"; //로컬용
+		String uploadDir = "/var/lib/tomcat9/webapps/upload"; //자동 배포용
 		UUID uuid = UUID.randomUUID(); // 파일의 이름을 uuid(고유값, pk로 사용)로 바꿔서 이름 같아도 쓸수있도록
 		// 파일명에 -이 들어가면 안됨 => -는 마이너스 역할이라.. 그래서 이걸 없애줌
 		String uniqueName = uuid.toString().replaceAll("-", "");

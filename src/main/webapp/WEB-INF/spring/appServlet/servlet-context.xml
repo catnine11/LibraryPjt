@@ -14,8 +14,9 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/libraryUploadImg/**" location="file:///C:/library/upload/"/> 
+<!-- 	<resources mapping="/libraryUploadImg/**" location="file:///C:/library/upload/"/>  -->
 	<!-- c://으로 우리 컴퓨터 서버의 위치 설정해줌 -->
+	<resources mapping="/libraryUploadImg/**" location="file:///var/lib/tomcat9/webapps/upload/"/> 
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
